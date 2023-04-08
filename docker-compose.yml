@@ -1,0 +1,28 @@
+version: "3.9"
+
+# volumes:
+#   local_postgres_data: {}
+
+services:
+
+  server:
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+    container_name: server
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./server/app:/app
+    env_file:
+      - ./server/.envs
+    depends_on:
+      - ocr
+
+  ocr:
+    build:
+      context: ./ocr
+      dockerfile: ./Dockerfile
+    container_name: ocr
+    volumes:
+      - ./ocr/app:/app
